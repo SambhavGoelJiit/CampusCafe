@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/userEmailLogin"
         android:layout_width="327dp"
         android:layout_height="57dp"
         android:layout_marginTop="24dp"
@@ -65,7 +65,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/userPasswordLogin"
         android:layout_width="325dp"
         android:layout_height="57dp"
         android:layout_marginTop="16dp"
@@ -77,9 +77,9 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:paddingLeft="15dp"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress" />
+        app:layout_constraintEnd_toEndOf="@+id/userEmailLogin"
+        app:layout_constraintStart_toStartOf="@+id/userEmailLogin"
+        app:layout_constraintTop_toBottomOf="@+id/userEmailLogin" />
 
     <TextView
         android:id="@+id/textView8"
@@ -87,9 +87,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Or"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintEnd_toEndOf="@+id/userPasswordLogin"
+        app:layout_constraintStart_toStartOf="@+id/userPasswordLogin"
+        app:layout_constraintTop_toBottomOf="@+id/userPasswordLogin" />
 
     <TextView
         android:id="@+id/textView9"
@@ -100,38 +100,19 @@
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
-        android:background="@drawable/whitebutton"
-        android:layout_width="152dp"
-        android:layout_height="57dp"
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/googleButton"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginTop="16dp"
-        android:paddingLeft="15dp"
-        android:drawableLeft="@drawable/google"
-        android:text="Google"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toStartOf="@+id/button2"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/whitebutton"
+        android:src="@drawable/google"
+        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        app:layout_constraintStart_toStartOf="@+id/textView9"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button2"
-        android:background="@drawable/whitebutton"
-        android:layout_width="152dp"
-        android:layout_height="57dp"
-        android:layout_marginTop="16dp"
-        android:paddingLeft="15dp"
-        android:drawableLeft="@drawable/facebook"
-        android:text="Facebook"
-        android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/button"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/loginbutton"
+        android:id="@+id/loginButton"
         android:layout_width="152dp"
         android:layout_height="57dp"
         android:layout_marginTop="16dp"
@@ -140,18 +121,18 @@
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintEnd_toEndOf="@+id/userPasswordLogin"
+        app:layout_constraintStart_toStartOf="@+id/userPasswordLogin"
+        app:layout_constraintTop_toBottomOf="@+id/googleButton" />
 
     <TextView
-        android:id="@+id/donthavebutton"
+        android:id="@+id/dontHaveAccButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Don't Have An Account?"
         android:textSize="10sp"
-        app:layout_constraintEnd_toEndOf="@+id/loginbutton"
-        app:layout_constraintStart_toStartOf="@+id/loginbutton"
-        app:layout_constraintTop_toBottomOf="@+id/loginbutton" />
+        app:layout_constraintEnd_toEndOf="@+id/loginButton"
+        app:layout_constraintStart_toStartOf="@+id/loginButton"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>
