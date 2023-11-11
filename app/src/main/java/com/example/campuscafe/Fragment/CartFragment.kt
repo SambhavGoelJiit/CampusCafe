@@ -32,6 +32,7 @@ class CartFragment : Fragment() {
     private lateinit var cartImageUri: MutableList<String>
     private lateinit var cartItemQty: MutableList<Int>
     private lateinit var userId: String
+    private lateinit var cartAdapter: CartAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +48,47 @@ class CartFragment : Fragment() {
         retrieveCartItems()
 
         binding.proceedButton.setOnClickListener {
-            val intent = Intent(requireContext(), PayoutActivity::class.java)
-            startActivity(intent)
+            getOrderItemDetails()
         }
         return binding.root
+    }
+
+    private fun getOrderItemDetails() {
+        val orderIdRef: DatabaseReference =
+            database.reference.child("userMainApp").child(userId).child("cartItems")
+        val foodName = mutableListOf<String>()
+        val foodPrice = mutableListOf<String>()
+        val foodQuantity = cartAdapter.getUpdatedItemsQuantity()
+
+        orderIdRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (foodSnapshot in snapshot.children) {
+                    val orderItems = foodSnapshot.getValue(CartItems::class.java)
+                    orderItems?.foodName?.let { foodName.add(it) }
+                    orderItems?.foodPrice?.let { foodPrice.add(it) }
+                }
+                orderNow(foodName, foodPrice, foodQuantity)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(requireContext(), "OrderNot Generated", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+    }
+
+    private fun orderNow(
+        foodName: MutableList<String>,
+        foodPrice: MutableList<String>,
+        foodQuantity: MutableList<Int>
+    ) {
+        if (isAdded && context != null) {
+            val intent = Intent(requireContext(), PayoutActivity::class.java)
+            intent.putExtra("FoodItemName", foodName as ArrayList<String>)
+            intent.putExtra("FoodItemPrice", foodPrice as ArrayList<String>)
+            intent.putExtra("FoodItemQuantity", foodQuantity as ArrayList<Int>)
+            startActivity(intent)
+        }
     }
 
     private fun retrieveCartItems() {
@@ -77,7 +115,7 @@ class CartFragment : Fragment() {
             }
 
             private fun setAdapter() {
-                val adapter = CartAdapter(
+                cartAdapter = CartAdapter(
                     cartFoodName,
                     cartItemPrice,
                     cartImageUri,
@@ -86,7 +124,7 @@ class CartFragment : Fragment() {
                 )
                 binding.cartRecyclerView.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                binding.cartRecyclerView.adapter = adapter
+                binding.cartRecyclerView.adapter = cartAdapter
             }
 
             override fun onCancelled(error: DatabaseError) {
