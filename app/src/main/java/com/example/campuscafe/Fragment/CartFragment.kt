@@ -8,14 +8,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.campuscafe.CongratsBottomSheet
 import com.example.campuscafe.PayoutActivity
-import com.example.campuscafe.R
 import com.example.campuscafe.adapter.CartAdapter
 import com.example.campuscafe.databinding.FragmentCartBinding
 import com.example.campuscafe.model.CartItems
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference

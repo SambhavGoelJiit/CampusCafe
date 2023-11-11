@@ -30,6 +30,7 @@ class MenuBottomSheetFragment : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentMenuBottomSheetBinding.inflate(inflater, container, false)
+        
         binding.buttonBack.setOnClickListener {
             dismiss()
         }

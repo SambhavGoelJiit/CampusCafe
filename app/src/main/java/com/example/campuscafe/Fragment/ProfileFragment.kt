@@ -30,12 +30,29 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         setUserData()
 
+        binding.apply {
+            name.isEnabled = false
+            email.isEnabled = false
+            phone.isEnabled = false
+            binding.editButton.setOnClickListener {
+                name.isEnabled = !name.isEnabled
+                email.isEnabled = !email.isEnabled
+                phone.isEnabled = !phone.isEnabled
+                editButton.visibility = View.INVISIBLE
+            }
+        }
+
         binding.saveInfoButton.setOnClickListener {
             val name = binding.name.text.toString()
             val email = binding.email.text.toString()
             val phone = binding.phone.text.toString()
 
             updateUserData(name, email, phone)
+
+            binding.name.isEnabled = false
+            binding.email.isEnabled = false
+            binding.phone.isEnabled = false
+            binding.editButton.visibility = View.VISIBLE
         }
 
         return binding.root
