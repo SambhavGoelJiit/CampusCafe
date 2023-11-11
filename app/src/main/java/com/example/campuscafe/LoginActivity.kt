@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import com.example.campuscafe.databinding.ActivityLoginBinding
+import com.example.campuscafe.model.UserModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -15,22 +16,24 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.auth
-
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.database
-
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 @Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
-    private lateinit var database: DatabaseReference
+    private lateinit var databaseReference: DatabaseReference
     private lateinit var email: String
     private lateinit var password: String
     private lateinit var googleSignInClient: GoogleSignInClient
 
-    private val binding: ActivityLoginBinding by lazy{
+    private val binding: ActivityLoginBinding by lazy {
         ActivityLoginBinding.inflate(layoutInflater)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -40,7 +43,7 @@ class LoginActivity : AppCompatActivity() {
             .build()
 
         auth = Firebase.auth
-        database = Firebase.database.reference
+        databaseReference = FirebaseDatabase.getInstance().getReference()
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
 
         binding.loginButton.setOnClickListener {
@@ -78,9 +81,26 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUi(user: FirebaseUser?) {
+        if (user != null) {
+            val userId = user.uid
+            val userReference = databaseReference.child("userMainApp").child(userId)
+            userReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val userData = snapshot.getValue(UserModel::class.java)
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                    finish()
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+        }
+
+
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
+
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

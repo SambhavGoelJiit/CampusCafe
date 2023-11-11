@@ -73,14 +73,26 @@
                 android:id="@+id/menuPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="150dp"
                 android:layout_marginTop="16dp"
                 android:text="$5"
                 android:textColor="@color/textColor"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.735"
-                app:layout_constraintStart_toEndOf="@+id/menuFoodName"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="₹"
+                android:textColor="@color/textColor"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/menuPrice"
+                app:layout_constraintEnd_toStartOf="@+id/menuPrice"
+                app:layout_constraintTop_toTopOf="@+id/menuPrice" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
