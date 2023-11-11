@@ -4,23 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".PayoutActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageButton
-            android:src="@drawable/arrow_left"
-            android:id="@+id/button5"
-            android:scaleType="centerCrop"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:id="@+id/backButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/arrow_left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -57,46 +58,16 @@
                 android:textColor="@color/black" />
 
             <EditText
+                android:id="@+id/custName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:ems="10"
-                android:inputType="text"
-                android:text="Name" />
+                android:hint="Name"
+                android:inputType="text" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/profileedittextshape"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView18">
 
-            <TextView
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:text="Address"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@android:color/transparent"
-                android:ems="10"
-                android:inputType="textMultiLine"
-                android:text="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate  " /> />
-        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -118,21 +89,23 @@
                 android:textColor="@color/black" />
 
             <EditText
+                android:id="@+id/custPhone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@android:color/transparent"
                 android:ems="10"
-                android:inputType="phone"
-                android:text="123" />
+                android:hint="+91"
+                android:inputType="phone" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/profileedittextshape"
             android:gravity="center_vertical"
             android:orientation="horizontal"
@@ -148,16 +121,17 @@
                 android:textColor="@color/black" />
 
             <EditText
+                android:id="@+id/custAmount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="end"
-                android:paddingEnd="32dp"
                 android:background="@android:color/transparent"
                 android:ems="10"
-                android:textColor="@color/textColor"
+                android:gravity="end"
+                android:hint="₹"
                 android:inputType="none"
-                android:text="₹51" />
+                android:paddingEnd="32dp"
+                android:textColor="@color/textColor" />
         </LinearLayout>
     </LinearLayout>
 
