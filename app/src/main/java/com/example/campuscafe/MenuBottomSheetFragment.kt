@@ -9,6 +9,7 @@ import com.example.campuscafe.adapter.MenuAdapter
 import com.example.campuscafe.databinding.FragmentMenuBottomSheetBinding
 import com.example.campuscafe.model.MenuItem
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -22,13 +23,12 @@ class MenuBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var menuItems: MutableList<MenuItem>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentMenuBottomSheetBinding.inflate(inflater, container, false)
         
         binding.buttonBack.setOnClickListener {
@@ -53,17 +53,18 @@ class MenuBottomSheetFragment : BottomSheetDialogFragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
 
         })
     }
 
     private fun setAdapter() {
-        val adapter = MenuAdapter(menuItems, requireContext())
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+        val adapter = MenuAdapter(menuItems, requireContext(), database, userId)
         binding.menuRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.menuRecyclerView.adapter = adapter
     }
+
 
     companion object {
 

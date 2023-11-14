@@ -20,8 +20,9 @@ class SignActivity : AppCompatActivity() {
     private lateinit var username: String
     private lateinit var email: String
     private lateinit var password: String
+    private lateinit var phone: String
 
-    private val binding: ActivitySignBinding by lazy{
+    private val binding: ActivitySignBinding by lazy {
         ActivitySignBinding.inflate(layoutInflater)
     }
 
@@ -33,7 +34,7 @@ class SignActivity : AppCompatActivity() {
         auth = Firebase.auth
         database = Firebase.database.reference
 
-        binding.createAccButton.setOnClickListener{
+        binding.createAccButton.setOnClickListener {
             username = binding.userNameSign.text.toString().trim()
             email = binding.userEmailSign.text.toString().trim()
             password = binding.userPasswordSign.text.toString().trim()
@@ -71,7 +72,8 @@ class SignActivity : AppCompatActivity() {
         username = binding.userNameSign.text.toString().trim()
         email = binding.userEmailSign.text.toString().trim()
         password = binding.userPasswordSign.text.toString().trim()
-        val user = UserModel(username, email, password)
+        phone = binding.userPhoneSign.text.toString().trim()
+        val user = UserModel(username, email, password, phone, "500")
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         database.child("userMainApp").child(userId).setValue(user)
     }

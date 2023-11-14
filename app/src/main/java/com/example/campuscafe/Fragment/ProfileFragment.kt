@@ -1,12 +1,12 @@
 package com.example.campuscafe.Fragment
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import com.example.campuscafe.R
+import androidx.fragment.app.Fragment
+import com.example.campuscafe.LoginActivity
 import com.example.campuscafe.databinding.FragmentProfileBinding
 import com.example.campuscafe.model.UserModel
 import com.google.firebase.auth.FirebaseAuth
@@ -19,60 +19,19 @@ class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private val auth = FirebaseAuth.getInstance()
     private val database = FirebaseDatabase.getInstance()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         setUserData()
 
-        binding.apply {
-            name.isEnabled = false
-            email.isEnabled = false
-            phone.isEnabled = false
-            binding.editButton.setOnClickListener {
-                name.isEnabled = !name.isEnabled
-                email.isEnabled = !email.isEnabled
-                phone.isEnabled = !phone.isEnabled
-                editButton.visibility = View.INVISIBLE
-            }
-        }
-
-        binding.saveInfoButton.setOnClickListener {
-            val name = binding.name.text.toString()
-            val email = binding.email.text.toString()
-            val phone = binding.phone.text.toString()
-
-            updateUserData(name, email, phone)
-
-            binding.name.isEnabled = false
-            binding.email.isEnabled = false
-            binding.phone.isEnabled = false
-            binding.editButton.visibility = View.VISIBLE
+        binding.logoutButton.setOnClickListener {
+            logoutUser()
         }
 
         return binding.root
-    }
-
-    private fun updateUserData(name: String, email: String, phone: String) {
-        val userId = auth.currentUser?.uid
-        if (userId != null) {
-            val userRef = database.getReference("userMainApp").child(userId)
-            val userData = hashMapOf(
-                "usernameModel" to name,
-                "emailModel" to email,
-                "phoneModel" to phone
-            )
-            userRef.setValue(userData).addOnSuccessListener {
-                Toast.makeText(requireContext(), "Update Successful", Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener {
-                Toast.makeText(requireContext(), "Update Unsuccessful", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     private fun setUserData() {
@@ -89,18 +48,27 @@ class ProfileFragment : Fragment() {
                                 name.setText(userProfile.usernameModel)
                                 email.setText(userProfile.emailModel)
                                 phone.setText(userProfile.phoneModel)
+                                token.setText(userProfile.tokenModel)
+                                name.isEnabled = false
+                                email.isEnabled = false
+                                phone.isEnabled = false
+                                token.isEnabled = false
                             }
-
                         }
-
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
                 }
-
             })
         }
+    }
+
+    private fun logoutUser() {
+        auth.signOut()
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        requireActivity().finish()
     }
 }

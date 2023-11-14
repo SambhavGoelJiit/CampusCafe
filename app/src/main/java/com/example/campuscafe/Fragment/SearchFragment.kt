@@ -10,6 +10,7 @@ import com.example.campuscafe.adapter.MenuAdapter
 import com.example.campuscafe.databinding.FragmentSearchBinding
 import android.widget.SearchView
 import com.example.campuscafe.model.MenuItem
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -58,8 +59,9 @@ class SearchFragment : Fragment() {
         setAdapter(filteredMenuItem)
     }
 
-    private fun setAdapter(filteredMenuItem: List<MenuItem>) {
-        adapter = MenuAdapter(filteredMenuItem, requireContext())
+    private fun setAdapter(subsetMenuItems: List<MenuItem>) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+        adapter = MenuAdapter(subsetMenuItems, requireContext(), database, userId)
         binding.menuRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.menuRecyclerView.adapter = adapter
     }

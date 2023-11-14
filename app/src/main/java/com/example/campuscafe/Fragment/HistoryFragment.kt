@@ -1,14 +1,12 @@
 package com.example.campuscafe.Fragment
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.campuscafe.OrderDetailsActivity
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.campuscafe.R
 import com.example.campuscafe.adapter.BuyAgainAdapter
 import com.example.campuscafe.databinding.FragmentHistoryBinding
@@ -35,78 +33,56 @@ class HistoryFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHistoryBinding.inflate(layoutInflater, container, false)
+        val view = binding.root
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
+        setupSwipeToRefresh(view)
         retrieveOrderHistory()
-
-        binding.currOrder.setOnClickListener {
-            seeItemsRecentBuy()
-        }
-        return binding.root
+        return view
     }
 
-    private fun seeItemsRecentBuy() {
-        listOfOrderItems.firstOrNull()?.let { recentBuy ->
-            val intent = Intent(requireContext(), OrderDetailsActivity::class.java)
-            intent.putExtra("RecentBuyOrderItem", recentBuy)
-            startActivity(intent)
+    private fun setupSwipeToRefresh(view: View) {
+        val swipeRefreshLayout =
+            view.findViewById<SwipeRefreshLayout>(R.id.swipeRefreshLayoutHistory)
+        swipeRefreshLayout.setOnRefreshListener {
+            retrieveOrderHistory()
+            swipeRefreshLayout.isRefreshing = false
         }
     }
 
     private fun retrieveOrderHistory() {
-        binding.currOrder.visibility = View.INVISIBLE
         userId = auth.currentUser?.uid ?: ""
-        val buyItemRef: DatabaseReference =
-            database.reference.child("userMainApp").child(userId).child("PurHistory")
-        val sortQuery = buyItemRef.orderByChild("currentTime")
 
-        sortQuery.addListenerForSingleValueEvent(object : ValueEventListener {
+        val orderDetailsRef: DatabaseReference = database.reference.child("OrderDetails")
+        val query = orderDetailsRef.orderByChild("uid").equalTo(userId)
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (buySnapshot in snapshot.children) {
-                    val buyHistoryItem = buySnapshot.getValue(OrderDetails::class.java)
-                    buyHistoryItem?.let {
+                listOfOrderItems.clear()
+                for (orderSnapshot in snapshot.children) {
+                    val orderItem = orderSnapshot.getValue(OrderDetails::class.java)
+                    orderItem?.let {
                         listOfOrderItems.add(it)
                     }
                 }
                 listOfOrderItems.reverse()
 
                 if (listOfOrderItems.isNotEmpty()) {
-                    setDataInRecentBuyItem()
-                    setPreviousBuyItemsRecyclerView()
+                    setPreviousBuyItemsRecyclerView(listOfOrderItems)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
             }
 
         })
     }
 
-    private fun setDataInRecentBuyItem() {
-        binding.currOrder.visibility = View.VISIBLE
-        val recentOrderItem = listOfOrderItems.firstOrNull()
-        recentOrderItem?.let {
-            with(binding) {
-                buyAgainFoodName.text = it.foodNames?.firstOrNull() ?: ""
-                buyAgainFoodPrice.text = it.foodPrices?.firstOrNull() ?: ""
-            }
-        }
-    }
-
-    private fun setPreviousBuyItemsRecyclerView() {
-        val buyAgainFoodName = mutableListOf<String>()
-        val buyAgainFoodPrice = mutableListOf<String>()
-
-        for (i in 1 until listOfOrderItems.size) {
-            listOfOrderItems[i].foodNames?.firstOrNull()?.let { buyAgainFoodName.add(it) }
-            listOfOrderItems[i].foodPrices?.firstOrNull()?.let { buyAgainFoodPrice.add(it) }
-        }
+    private fun setPreviousBuyItemsRecyclerView(orderItems: List<OrderDetails>) {
         val rv = binding.buyAgainRecyclerView
         rv.layoutManager = LinearLayoutManager(requireContext())
-        buyAgainAdapter = BuyAgainAdapter(buyAgainFoodName, buyAgainFoodPrice, requireContext())
+        buyAgainAdapter = BuyAgainAdapter(orderItems, requireContext())
         rv.adapter = buyAgainAdapter
     }
 }

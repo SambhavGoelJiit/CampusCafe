@@ -12,9 +12,8 @@ class OrderDetailsActivity : AppCompatActivity() {
         ActivityOrderDetailsBinding.inflate(layoutInflater)
     }
 
-    private lateinit var allFoodNames: ArrayList<String>
-    private lateinit var allFoodPrices: ArrayList<String>
-    private lateinit var allFoodQuantities: ArrayList<Int>
+    private lateinit var orderDetails: OrderDetails // Add this line
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -23,19 +22,25 @@ class OrderDetailsActivity : AppCompatActivity() {
             finish()
         }
 
-        val recentOrderItems = intent.getSerializableExtra("RecentBuyOrderItem") as? OrderDetails
-        recentOrderItems?.let { orderDetails ->
-            allFoodNames = (orderDetails.foodNames as? ArrayList<String>) ?: ArrayList()
-            allFoodPrices = (orderDetails.foodPrices as? ArrayList<String>) ?: ArrayList()
-            allFoodQuantities = (orderDetails.foodQuantities as? ArrayList<Int>) ?: ArrayList()
-        }
+        orderDetails = intent.getSerializableExtra("orderDetails") as? OrderDetails
+            ?: return
+
         setAdapter()
     }
 
     private fun setAdapter() {
         val rv = binding.orderDetailRV
+        val foodNames: ArrayList<String>? = orderDetails.foodNames?.let { ArrayList(it) }
+        val foodPrices: ArrayList<String>? = orderDetails.foodPrices?.let { ArrayList(it) }
+        val foodQuantities: ArrayList<Int>? = orderDetails.foodQuantities?.let { ArrayList(it) }
+
         rv.layoutManager = LinearLayoutManager(this)
-        val adapter = RecentBuyAdapter(this, allFoodNames, allFoodPrices, allFoodQuantities)
+        val adapter = RecentBuyAdapter(
+            this,
+            foodNames ?: ArrayList(),
+            foodPrices ?: ArrayList(),
+            foodQuantities ?: ArrayList()
+        )
         rv.adapter = adapter
     }
 }

@@ -11,53 +11,84 @@ import com.example.campuscafe.databinding.MenuItemBinding
 import com.example.campuscafe.model.CartItems
 import com.example.campuscafe.model.MenuItem
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MenuAdapter(
     private val menuItems: List<MenuItem>,
-    private val requireContext: Context
+    private val context: Context,
+    private val database: FirebaseDatabase,
+    private val userId: String
 ) : RecyclerView.Adapter<MenuAdapter.MenuViewHolder>() {
 
-    private lateinit var auth: FirebaseAuth
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuViewHolder {
-        auth = FirebaseAuth.getInstance()
         val binding = MenuItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MenuViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MenuViewHolder, position: Int) {
-        holder.bind(position)
+        holder.bind(menuItems[position])
     }
 
     override fun getItemCount(): Int = menuItems.size
     inner class MenuViewHolder(private val binding: MenuItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(position: Int) {
-            val item = menuItems[position]
+
+        fun bind(menuItem: MenuItem) {
             binding.apply {
-                menuFoodName.text = item.foodName
-                menuPrice.text = item.foodPrice
-                val uri = Uri.parse(item.foodImage)
-                Glide.with(requireContext).load(uri).into(menuImage)
+                menuFoodName.text = menuItem.foodName
+                menuPrice.text = menuItem.foodPrice
+                val uri = Uri.parse(menuItem.foodImage)
+                Glide.with(context).load(uri).into(menuImage)
 
                 menuAddToCart.setOnClickListener {
-                    val database = FirebaseDatabase.getInstance().reference
-                    val userId = auth.currentUser?.uid ?: ""
-                    val cartItem = CartItems(
-                        item.foodName.toString(),
-                        item.foodPrice.toString(),
-                        item.foodImage.toString(),
-                        1
-                    )
-                    database.child("userMainApp").child(userId).child("cartItems").push()
-                        .setValue(cartItem).addOnSuccessListener {
-                            Toast.makeText(requireContext, "Added To Cart", Toast.LENGTH_SHORT).show()
-                        }.addOnFailureListener{
-                            Toast.makeText(requireContext, "Failed To Add To Cart", Toast.LENGTH_SHORT).show()
-                        }
+                    addToCart(menuItem)
                 }
             }
+        }
+
+        private fun showToast(message: String) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        }
+
+        private fun addToCart(menuItem: MenuItem) {
+            val cartItem = CartItems(
+                foodName = menuItem.foodName,
+                foodPrice = menuItem.foodPrice,
+                foodImage = menuItem.foodImage,
+                foodQuantity = 1
+            )
+
+            val cartItemsReference = database.reference
+                .child("userMainApp")
+                .child(userId)
+                .child("cartItems")
+
+            cartItemsReference.orderByChild("foodName").equalTo(cartItem.foodName)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            for (itemSnapshot in snapshot.children) {
+                                val existingCartItem = itemSnapshot.getValue(CartItems::class.java)
+                                existingCartItem?.let {
+                                    val newQuantity =
+                                        (it.foodQuantity?.toInt() ?: 0) + cartItem.foodQuantity!!
+                                    itemSnapshot.ref.child("foodQuantity").setValue(newQuantity)
+                                    showToast("Item Already in cart, Qty increased by 1")
+                                }
+                            }
+                        } else {
+                            val newItemRef = cartItemsReference.push()
+                            newItemRef.setValue(cartItem)
+                            showToast("Item Added to Cart")
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                })
         }
     }
 }

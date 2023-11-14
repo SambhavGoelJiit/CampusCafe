@@ -15,6 +15,7 @@ import com.example.campuscafe.adapter.MenuAdapter
 import com.example.campuscafe.adapter.PopularAdapter
 import com.example.campuscafe.databinding.FragmentHomeBinding
 import com.example.campuscafe.model.MenuItem
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -36,9 +37,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHomeBinding.inflate(inflater,container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        binding.viewAllMenu.setOnClickListener{
+        binding.viewAllMenu.setOnClickListener {
             val bottomSheetDialog = MenuBottomSheetFragment()
             bottomSheetDialog.show(parentFragmentManager, "Test")
         }
@@ -50,9 +51,9 @@ class HomeFragment : Fragment() {
         database = FirebaseDatabase.getInstance()
         val foodRef: DatabaseReference = database.reference.child("menu")
         menuItems = mutableListOf()
-        foodRef.addListenerForSingleValueEvent(object: ValueEventListener{
+        foodRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for(foodSnapShot in snapshot.children){
+                for (foodSnapShot in snapshot.children) {
                     val menuItem = foodSnapShot.getValue(MenuItem::class.java)
                     menuItem?.let { menuItems.add(it) }
                 }
@@ -74,7 +75,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setPopularItemsAdapter(subsetMenuItems: List<MenuItem>) {
-        val adapter = MenuAdapter(subsetMenuItems, requireContext())
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
+        val adapter = MenuAdapter(subsetMenuItems, requireContext(), database, userId)
         binding.PopularRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.PopularRecyclerView.adapter = adapter
     }
@@ -90,7 +92,7 @@ class HomeFragment : Fragment() {
         val imageSlider = binding.imageSlider
         imageSlider.setImageList(imageList)
         imageSlider.setImageList(imageList, ScaleTypes.FIT)
-        imageSlider.setItemClickListener(object :ItemClickListener{
+        imageSlider.setItemClickListener(object : ItemClickListener {
             override fun doubleClick(position: Int) {
                 TODO("Not yet implemented")
             }
@@ -103,7 +105,7 @@ class HomeFragment : Fragment() {
         })
     }
 
-    companion object{
+    companion object {
 
     }
 }
