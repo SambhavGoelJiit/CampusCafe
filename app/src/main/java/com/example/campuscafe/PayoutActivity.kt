@@ -3,11 +3,8 @@ package com.example.campuscafe
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
-import com.example.campuscafe.Fragment.CartFragment
 import com.example.campuscafe.databinding.ActivityPayoutBinding
-import com.example.campuscafe.databinding.FragmentCartBinding
 import com.example.campuscafe.model.OrderDetails
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -35,18 +32,21 @@ class PayoutActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         auth = FirebaseAuth.getInstance()
-        databaseReference = FirebaseDatabase.getInstance().getReference()
+        databaseReference = FirebaseDatabase.getInstance().reference
         setUserData()
 
         val intent = intent
         foodItemNames = intent.getStringArrayListExtra("FoodItemName") as ArrayList<String>
         foodItemPrices = intent.getStringArrayListExtra("FoodItemPrice") as ArrayList<String>
         foodItemQuantities = intent.getIntegerArrayListExtra("FoodItemQuantity") as ArrayList<Int>
-        totalAmount = "₹" + calculateTotalAmount().toString()
+        totalAmount = calculateTotalAmount().toString()
         binding.custAmount.isEnabled = false
-        binding.custAmount.setText(totalAmount)
+        val strTotal = "₹$totalAmount"
+        binding.custAmount.setText(strTotal)
 
         binding.backButton.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()
         }
 
@@ -69,6 +69,7 @@ class PayoutActivity : AppCompatActivity() {
         val orderDetails = OrderDetails(
             userId,
             name,
+            totalAmount,
             foodItemNames,
             foodItemPrices,
             foodItemQuantities,
@@ -83,9 +84,6 @@ class PayoutActivity : AppCompatActivity() {
             removeItemFromCart()
             addOrderToHistory(orderDetails)
             Toast.makeText(this, "Order Placed", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, CartFragment::class.java)
-            startActivity(intent)
-            finish()
         }.addOnFailureListener {
             Toast.makeText(this, "Failed To Order", Toast.LENGTH_SHORT).show()
         }

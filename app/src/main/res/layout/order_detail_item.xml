@@ -83,7 +83,5 @@
                 app:layout_constraintEnd_toStartOf="@+id/priceOrDet"
                 app:layout_constraintTop_toTopOf="@+id/priceOrDet" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.cardview.widget.CardView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
