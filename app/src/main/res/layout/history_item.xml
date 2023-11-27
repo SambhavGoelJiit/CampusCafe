@@ -60,7 +60,8 @@
                 android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/buyAgainFoodPrice"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/buyAgainFoodName" />
+                app:layout_constraintStart_toStartOf="@+id/recieveButton"
+                app:layout_constraintTop_toBottomOf="@+id/buyAgainFoodName" />
 
             <TextView
                 android:id="@+id/textView10"
@@ -83,6 +84,29 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="@+id/textView10"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/buyAgainFoodName" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="ETA"
+                app:layout_constraintBottom_toTopOf="@+id/textView10"
+                app:layout_constraintStart_toStartOf="@+id/buyAgainFoodName"
+                app:layout_constraintTop_toBottomOf="@+id/buyAgainFoodName" />
+
+            <TextView
+                android:id="@+id/eta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="time"
+                android:text="Time"
+                app:layout_constraintBottom_toTopOf="@+id/buyAgainFoodPrice"
+                app:layout_constraintStart_toStartOf="@+id/buyAgainFoodPrice"
                 app:layout_constraintTop_toBottomOf="@+id/buyAgainFoodName" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

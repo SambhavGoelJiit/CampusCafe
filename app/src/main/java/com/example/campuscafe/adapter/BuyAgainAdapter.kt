@@ -4,16 +4,22 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.campuscafe.OrderDetailsActivity
 import com.example.campuscafe.databinding.HistoryItemBinding
 import com.example.campuscafe.model.OrderDetails
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class BuyAgainAdapter(
     private val orderItems: List<OrderDetails>,
@@ -43,12 +49,16 @@ class BuyAgainAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
 
+        @RequiresApi(Build.VERSION_CODES.O)
         @SuppressLint("SetTextI18n")
         fun bind(orderItem: OrderDetails) {
             with(binding) {
                 buyAgainFoodName.text = (orderItem.uid + orderItem.currentTime.toString()) ?: ""
                 buyAgainFoodPrice.text = orderItem.total ?: ""
+                val formattedTime = convertTimestampToTime(orderItem.currentTime)
+                eta.text = formattedTime
 
+                eta.visibility = View.INVISIBLE
                 recieveButton.visibility = View.INVISIBLE
 
                 recieveButton.setOnClickListener {
@@ -68,18 +78,24 @@ class BuyAgainAdapter(
                     orderStatus.text = "Completed"
                     recieveButton.visibility = View.INVISIBLE
                 } else if (orderItem.orderDispatched) {
-                    orderStatus.setTextColor(Color.parseColor("#00FF00"))
-                    orderStatus.text = "Order Ready"
                     recieveButton.visibility = View.VISIBLE
                 } else if (orderItem.orderAccepted) {
                     orderStatus.setTextColor(Color.parseColor("#CA9F18"))
                     orderStatus.text = "Food is being prepared"
+                    eta.visibility = View.VISIBLE
                 } else {
                     orderStatus.setTextColor(Color.parseColor("#FF0000"))
                     orderStatus.text = "Waiting for acceptance"
                 }
             }
         }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun convertTimestampToTime(timestamp: Long): String {
+        val instant = Instant.ofEpochMilli(timestamp)
+        val localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        return formatter.format(localDateTime)
     }
 }
 
