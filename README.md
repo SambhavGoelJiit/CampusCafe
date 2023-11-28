@@ -1,6 +1,9 @@
 ## 🧑‍💻CampusCafe🍴
 
-The project comprises of two apps, one for the admin and one for the user, these apps help to place and manage food orders in the college cafeteria. It specializes for dine in orders in cafeteria.
+This project encompasses two distinct applications: one designed for administrators and another for users. These apps streamline the process of ordering and handling food requests specifically within the college cafeteria, catering to dine-in orders.
+
+## Motivation
+The inspiration behind this project stemmed from the lengthy queues that swarm the college cafeteria during peak hours. It's a daily struggle for all students, including myself, with no existing solution in sight. With this project, my aim is to tackle this real-life predicament haunting my fellow colleagues and me at our college cafeteria. I'm driven by the desire to eliminate this persistent issue and make our daily routine smoother.
 
 ## ⚙️Installation
 
