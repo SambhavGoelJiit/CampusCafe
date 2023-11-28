@@ -26,7 +26,37 @@ Open the Project in Android Studio. For installation Follow this
 
 ## 📸 App Screenshots
 
-![Algorithm schema](./Screenshots/1.png)
+![LoginPage](./Screenshots/1.png)
+![SignUpPage](./Screenshots/2.png)
+![HomeFragment](./Screenshots/3.png)
+![CartFragment(EmptyInitially)](./Screenshots/4.png)
+![SearchFragment](./Screenshots/5.png)
+![HistoryFragment](./Screenshots/6.png)
+![ParticularOrderDetails1](./Screenshots/7.png)
+![ParticularOrderDetails2](./Screenshots/8.png)
+![ProfileFragment](./Screenshots/9.png)
+![ItemAddedToCart](./Screenshots/10.png)
+![ItemInCart](./Screenshots/11.png)
+![PayoutActivity](./Screenshots/12.png)
+![OrderPlacedUponClick](./Screenshots/13.png)
+![OrderStatus](./Screenshots/14.png)
+![EtaVisibleAfterAccepted](./Screenshots/15.png)
+![OrderDispatched](./Screenshots/16.png)
+![OrderCompleted](./Screenshots/17.png)
+![AdminHome](./Screenshots/18.png)
+![AddItemMenu](./Screenshots/19.png)
+![HandlingAlreadyExistingItem](./Screenshots/20.png)
+![UploadingNewItem](./Screenshots/21.png)
+![NewItemUploaded](./Screenshots/22.png)
+![Inventory](./Screenshots/23.png)
+![OrderStatusUponArrival](./Screenshots/24.png)
+![OrderStatusAfterAcceptance](./Screenshots/25.png)
+![CompletedOrders](./Screenshots/26.png)
+![handlingInsufficientBalance](./Screenshots/27.png)
+![AddingMultipleItemsInCart](./Screenshots/28.png)
+![HandlingCartRedundancy](./Screenshots/29.png)
+![NotClickedPaymentWhilstAdminRemovedAnyItemInOrderFromInventory](./Screenshots/30.png)
+![ItemAvailabilityHandeled](./Screenshots/31.png)
 
 ## About CampusCafe
 
