@@ -5,8 +5,8 @@ The project comprises of two apps, one for the admin and one for the user, these
 ## ⚙️Installation
 
 ```
-Install my UserApp.apk (for users)
-Install my AdminApp.apk (for admin)
+Install my UserApp.apk (for users) https://github.com/SambhavGoelJiit/campuscafe
+Install my AdminApp.apk (for admin) https://github.com/SambhavGoelJiit/admincampuscafe
 ```
 
 ## ⚙️Setup
@@ -15,8 +15,8 @@ Clone the repository on your machine. Open the project on your IDE and connect i
 
 Clone the Repository Repo
 
-https://github.com/SambhavGoelJiit/campuscafe
-https://github.com/SambhavGoelJiit/admincampuscafe
+* https://github.com/SambhavGoelJiit/campuscafe
+* https://github.com/SambhavGoelJiit/admincampuscafe
 
 Open the Project in Android Studio. For installation Follow this
 
