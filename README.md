@@ -25,37 +25,67 @@ Open the Project in Android Studio. For installation Follow this
 - Open CampusCafe App and Admin App into the Emulator or Physical Device.
 
 ## 📸 App Screenshots
-
+* Login Page
 ![LoginPage](./Screenshots/1.png)
+* Sign Up Page
 ![SignUpPage](./Screenshots/2.png)
+* Home Fragment
 ![HomeFragment](./Screenshots/3.png)
+*  Cart Fragment(Empty Initially)
 ![CartFragment(EmptyInitially)](./Screenshots/4.png)
+* Search Fragment
 ![SearchFragment](./Screenshots/5.png)
+* History Fragment
 ![HistoryFragment](./Screenshots/6.png)
+* Particular Order Details1
 ![ParticularOrderDetails1](./Screenshots/7.png)
+* Particular Order Details2
 ![ParticularOrderDetails2](./Screenshots/8.png)
+* Profile Fragment
 ![ProfileFragment](./Screenshots/9.png)
+* Item Added To Cart
 ![ItemAddedToCart](./Screenshots/10.png)
+* Item In Cart
 ![ItemInCart](./Screenshots/11.png)
+* PayoutActivity
 ![PayoutActivity](./Screenshots/12.png)
+* Order Placed Upon Click
 ![OrderPlacedUponClick](./Screenshots/13.png)
+* Order Status
 ![OrderStatus](./Screenshots/14.png)
+* Eta Visible After Accepted
 ![EtaVisibleAfterAccepted](./Screenshots/15.png)
+* Order Dispatched
 ![OrderDispatched](./Screenshots/16.png)
+* Order Completed
 ![OrderCompleted](./Screenshots/17.png)
+* Admin Home
 ![AdminHome](./Screenshots/18.png)
+* Add Item Menu
 ![AddItemMenu](./Screenshots/19.png)
+* Handling Already Existing Item
 ![HandlingAlreadyExistingItem](./Screenshots/20.png)
+* Uploading New Item
 ![UploadingNewItem](./Screenshots/21.png)
+* New Item Uploaded
 ![NewItemUploaded](./Screenshots/22.png)
+* Inventory
 ![Inventory](./Screenshots/23.png)
+* Order Status Upon Arrival
 ![OrderStatusUponArrival](./Screenshots/24.png)
+* Order Status After Acceptance
 ![OrderStatusAfterAcceptance](./Screenshots/25.png)
+* Completed Orders
 ![CompletedOrders](./Screenshots/26.png)
+* handling Insufficient Balance
 ![handlingInsufficientBalance](./Screenshots/27.png)
+* Adding Multiple Items In Cart
 ![AddingMultipleItemsInCart](./Screenshots/28.png)
+* Handling Cart Redundancy
 ![HandlingCartRedundancy](./Screenshots/29.png)
+* Not Clicked Payment Whilst Admin Removed Any Item In Order From Inventory
 ![NotClickedPaymentWhilstAdminRemovedAnyItemInOrderFromInventory](./Screenshots/30.png)
+* Item Availability Handeled
 ![ItemAvailabilityHandeled](./Screenshots/31.png)
 
 ## About CampusCafe
