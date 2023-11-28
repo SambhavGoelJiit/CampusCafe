@@ -40,6 +40,7 @@ It uses firebase for Storaging Data. It uses Firebase Authentication for email b
 * View all orders history and details.
 * Expected time of arrival for each order.
 * Check for availability of items before placing order in between checkout and payout time.
+* Check for sufficient balance before placing the order.
 
 ## Built With 🛠
 * Kotlin - First class and official programming language for Android development.
