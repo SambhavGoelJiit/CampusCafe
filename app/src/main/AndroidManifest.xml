@@ -32,9 +32,6 @@
             android:label="@string/title_activity_payout"
             android:theme="@style/Theme.Campuscafe" />
         <activity
-            android:name=".ChooseLocationActivity"
-            android:exported="false" />
-        <activity
             android:name=".SignActivity"
             android:exported="false" />
         <activity
