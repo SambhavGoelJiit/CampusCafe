@@ -26,7 +26,7 @@ Open the Project in Android Studio. For installation Follow this
 
 ## 📸 App Screenshots
 
-![Algorithm schema](./screenshots/1.png)
+![Algorithm schema](./Screenshots/1.png)
 
 ## About CampusCafe
 
