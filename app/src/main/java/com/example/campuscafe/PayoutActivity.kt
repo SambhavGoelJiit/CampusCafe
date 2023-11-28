@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlin.properties.Delegates
 
 @Suppress("NAME_SHADOWING")
 class PayoutActivity : AppCompatActivity() {
@@ -49,8 +50,40 @@ class PayoutActivity : AppCompatActivity() {
         }
 
         binding.placeMyOrder.setOnClickListener {
-            placeOrder()
+            var availableItemCount = 0
+
+            for (item in foodItemNames) {
+                checkItemAvailability(item) { available ->
+                    if (available) {
+                        availableItemCount++
+                        if (availableItemCount == foodItemNames.size) {
+                            placeOrder()
+                        }
+                    } else {
+                        Toast.makeText(
+                            this@PayoutActivity,
+                            "$item unavailable at the moment, Please remove from cart to proceed",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
         }
+
+    }
+
+    private fun checkItemAvailability(foodName: String, callback: (Boolean) -> Unit) {
+        val menuRef = FirebaseDatabase.getInstance().getReference("menu")
+        menuRef.orderByChild("foodName").equalTo(foodName)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    callback(snapshot.exists())
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callback(false)
+                }
+            })
     }
 
     private fun placeOrder() {
