@@ -125,7 +125,7 @@ Open the Project in Android Studio. For installation Follow this
       <td><img src="./Screenshots/28.png" width="250px" height="500px" /></td>
     </tr>
   </table>
-  <table>
+  <table width = "50%">
     <tr>
       <td>Handling Cart Redundancy</td>
       <td>Item Availability Handeled</td>
