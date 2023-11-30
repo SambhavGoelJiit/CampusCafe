@@ -140,7 +140,7 @@ Open the Project in Android Studio. For installation Follow this
         <tr>
           <td>Adding Multiple Items In Cart</td>
            <td>Handling Cart Redundancy</td>
-           <td>Not Clicked Payment Whilst Admin Removed Any Item In Order From Inventory</td>
+           <td>Not Clicked Payment Whilst Item Removed From Inventory</td>
         </tr>
         <tr>
           <td><img src="./Screenshots/28.png" width=270 height=300></td>
