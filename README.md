@@ -26,6 +26,27 @@ Open the Project in Android Studio. For installation Follow this
 - Add the dependencies and connect with Firebase.
 
 - Open CampusCafe App and Admin App into the Emulator or Physical Device.
+- <table>
+  <tr>
+    <td>Login Page</td>
+    <td><img src="./Screenshots/1.png" width="250px" height="500px" /></td>
+  </tr>
+  <tr>
+    <td>Sign Up Page</td>
+    <td><img src="./Screenshots/2.png" width="250px" height="500px" /></td>
+  </tr>
+  <!-- Continue this pattern for the remaining content -->
+  <!-- For instance, for the third and fourth items -->
+  <tr>
+    <td>Home Fragment</td>
+    <td><img src="./Screenshots/3.png" width="250px" height="500px" /></td>
+  </tr>
+  <tr>
+    <td>Cart Fragment(Empty Initially)</td>
+    <td><img src="./Screenshots/4.png" width="250px" height="500px" /></td>
+  </tr>
+  <!-- And so on for the rest of your content -->
+</table>
 
 ## 📸 App Screenshots
 <table>
